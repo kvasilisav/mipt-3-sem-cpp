@@ -28,14 +28,19 @@ struct Point {
 
 struct Rectangle {
     Point p;
-
+    
+    //конструктор без параметра
     Rectangle() : Rectangle(Point(0, 0)) {}
+    
+    //конструктор с параметром р
     Rectangle(Point const& p) : p(p) {}
 
+    //метод *
     Rectangle operator*(Rectangle const& rha) const {
         return Rectangle(Point(p.minx(rha.p).x, p.miny(rha.p).y));
     }
 
+    //метод +
     Rectangle operator+(Rectangle const& rha) const {
         return Rectangle(Point(p.maxx(rha.p).x, p.maxy(rha.p).y));
     }
@@ -140,4 +145,13 @@ int main() {
 
     delete[] operations;
     delete[] rec_array;
+
+    /*
+    tests:
+    (5,6)+(7,4)  =  (7,6)
+    (5,6)*(7,4)  =  (5,4)
+    (2,6)+(5,6)*(7,4)  =  (5,6)
+    (2,2)+(1,9)*(7,4) = (2,4)
+    (2,2)*(1,8)*(2,1)  =  (1,1)
+    */
 }

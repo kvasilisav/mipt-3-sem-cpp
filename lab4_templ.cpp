@@ -76,6 +76,7 @@ public:
 
     vector <T> arr;
 
+    //новое значение в очередь (как в куче)
     void push(T element)
     {
         arr.push_back(element);
@@ -96,6 +97,7 @@ public:
         }
     }
 
+    //чтение верхнего элемента очереди
     T peek()
     {
         if (arr.size() == 0)
@@ -105,6 +107,7 @@ public:
         else return arr[0];
     }
 
+    //удаление верхнего элемента 
     void poll()
     {
         arr.erase(arr.begin());
@@ -117,6 +120,7 @@ public:
 
     }
 
+    //проверка пустоты очереди
     bool is_empty()
     {
         return arr.size() == 0;
@@ -124,68 +128,59 @@ public:
 
 };
 
-template <typename T>
-void Output(T* arr, size_t N)
-{
-    for (int i = 0; i < N; i++)
-    {
-        cout << arr[i] << "  ";
-    }
-    cout << "\n\n";
-}
 
-template <typename T>
-void Output(vector <T> arr)
-{
-    for (int i = 0; i < arr.size(); i++)
-    {
-        cout << arr[i] << "  ";
-    }
-    cout << "\n\n";
-}
-
-template <typename T>
-void Test(T* arr, int N, comparator<T>& comp)
-{
-    cout << "Original array: ";
-    Output(arr, N);
-    Qsort(arr, 0, N - 1, comp);
-    cout << "Sorted array: ";
-    Output(arr, N);
-
-    PriorityQueue<T> q(comp);
-    for (int i = 0; i < N; i++)
-    {
-        q.push(arr[i]);
-    }
-    cout << "Priority queue: ";
-    Output(q.arr);
-
-    q.poll();
-
-    cout << "Queue(poll root): ";
-    Output(q.arr);
-    cout << "\n\n";
-}
 
 int main()
 {
     int arr1[15] = { 1471, 6074, 19, 544, 862, 3396, 5070, 83, 144, 5693, 437, 9873, 91051, 62, 94 };
-    int arr2[10] = { -3, 0, 7, 2, -7, 0, 4, -9, 2, 9 };
-    double arr3[8] = { -7.4, 0, 9.3, 1.0, -2.6, 3.8, 10.0, 9 };
-    string arr4[8] = { "unicorn", "juice", "underground", "peak", "bear", "pepper", "abricot", "boo" };
-    string arr5[10] = { "ab", "bc", "bd", "b", "a", "d", "c", "abc", "adc", "cd" };
-    // to be continued....
+    //int arr2[10] = { -3, 0, 7, 2, -7, 0, 4, -9, 2, 9 };
+    //double arr3[8] = { -7.4, 0, 9.3, 1.0, -2.6, 3.8, 10.0, 9 };
+    //string arr4[8] = { "unicorn", "juice", "underground", "peak", "bear", "pepper", "abricot", "boo" };
+    //string arr5[10] = { "ab", "bc", "bd", "b", "a", "d", "c", "abc", "adc", "cd" };
 
     IntComparator intComp;
-    DoubleComparator doubleComp;
-    StringComparator stringComp;
+    //DoubleComparator doubleComp;
+    //StringComparator stringComp;
 
-    Test(arr1, 15, intComp);
-    Test(arr2, 10, intComp);
-    Test(arr3, 8, doubleComp);
-    Test(arr4, 8, stringComp);
-    Test(arr5, 10, stringComp);
+    //изначальный 
+    cout << "Original array: ";
+    for (int i = 0; i < 15; i++)
+    {
+        cout << arr1[i] << "  ";
+    }
+    cout << "\n\n";
+    
+    //отсортированный
+    Qsort(arr1, 0, 15 - 1, intComp);
+    cout << "Sorted array: ";
+    for (int i = 0; i < 15; i++)
+    {
+        cout << arr1[i] << "  ";
+    }
+    cout << "\n\n";
+
+    //очередь с приоритетом
+    PriorityQueue<int> q(intComp);
+    for (int i = 0; i < 15; i++)
+    {
+        q.push(arr1[i]);
+    }
+    cout << "Priority queue: ";
+    for (int i = 0; i < q.arr.size(); i++)
+    {
+        cout << q.arr[i] << "  ";
+    }
+    cout << "\n\n";
+
+    //без верхнего элемента
+    q.poll();
+    cout << "Queue(poll root): ";
+    for (int i = 0; i < q.arr.size(); i++)
+    {
+        cout << q.arr[i] << "  ";
+    }
+    cout << "\n\n";
+
 
     return 0;
 }
